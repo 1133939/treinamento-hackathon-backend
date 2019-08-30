@@ -71,6 +71,34 @@ public class PersonagemDto {
 	public void setCombate(Integer combate) {
 		this.combate = combate;
 	}
+	public int hashCodePersonagem() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alinhamento == null) ? 0 : alinhamento.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+	public boolean equalsPersonagem(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonagemDto other = (PersonagemDto) obj;
+		if (alinhamento == null) {
+			if (other.alinhamento != null)
+				return false;
+		} else if (!alinhamento.equals(other.alinhamento))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

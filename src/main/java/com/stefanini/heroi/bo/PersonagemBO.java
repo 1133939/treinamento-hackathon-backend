@@ -174,22 +174,19 @@ public class PersonagemBO {
 			}
 			if(partida.getDuelos().size()==10) {
 				PersonagemDto vitorioso1 = new PersonagemDto();
-				vitorioso1.setNome("z90j0asmd0m102dskd102d");
 				PersonagemDto vitorioso2 = new PersonagemDto();
-				vitorioso2.setNome("xc9m93m20mwks23ded");
 
 				for(Duelo d : partida.getDuelos()) {
 					for(PersonagemDto p : d.getPersonagens()) {
 						if(p.getVitorias()>vitorioso1.getVitorias()) {
-							if(vitorioso2.getNome().equals(p.getNome())) {	
+							if(vitorioso2.equalsPersonagem(p)) {	
 								vitorioso2=vitorioso1;
 								vitorioso1=p;
 							}else {
 								vitorioso1=p;
 							}
 						}else
-						if(p.getVitorias()>=vitorioso2.getVitorias() && p.getVitorias()<=vitorioso1.getVitorias() && !p.getNome().equals(vitorioso1.getNome())) {
-							
+						if(p.getVitorias()>=vitorioso2.getVitorias() && p.getVitorias()<=vitorioso1.getVitorias() && !p.equalsPersonagem(vitorioso1)) {	
 							vitorioso2=p;
 						}
 						
@@ -205,16 +202,17 @@ public class PersonagemBO {
 		}
 		return partida;
 	}
+
 	public PersonagemDto createHeroiMutante(Partida partida) {
 		PersonagemDto mutante = partida.getHeroiQueMaisVenceu();
 		PersonagemDto p2 = partida.getSegundoHeroiQueMaisVenceu();
-		Integer inteligencia = (mutante.getInteligencia()>p2.getInteligencia()) ? mutante.getInteligencia() : p2.getInteligencia();
-		Integer forca = (mutante.getForca()>p2.getForca()) ? mutante.getForca() : p2.getForca();
-		Integer destreza = (mutante.getDestreza()>p2.getDestreza()) ? mutante.getDestreza() : p2.getDestreza();
-		Integer poder = (mutante.getPoder()>p2.getPoder()) ? mutante.getPoder() : p2.getPoder();
-		Integer combate = (mutante.getCombate()>p2.getCombate()) ? mutante.getCombate() : p2.getCombate();
-		Integer defesa = (mutante.getDefesa()>p2.getDefesa()) ? mutante.getDefesa() : p2.getDefesa();
-		mutante.setNome("THE MUTANTTTT");
+		Integer inteligencia = (mutante.getInteligencia() > p2.getInteligencia()) ? mutante.getInteligencia() : p2.getInteligencia();
+		Integer forca = (mutante.getForca() > p2.getForca()) ? mutante.getForca() : p2.getForca();
+		Integer destreza = (mutante.getDestreza() > p2.getDestreza()) ? mutante.getDestreza() : p2.getDestreza();
+		Integer poder = (mutante.getPoder() > p2.getPoder()) ? mutante.getPoder() : p2.getPoder();
+		Integer combate = (mutante.getCombate() > p2.getCombate()) ? mutante.getCombate() : p2.getCombate();
+		Integer defesa = (mutante.getDefesa() > p2.getDefesa()) ? mutante.getDefesa() : p2.getDefesa();
+		mutante.setNome(partida.getHeroiQueMaisVenceu().getNome());
 		mutante.setCombate(combate);
 		mutante.setDefesa(defesa);
 		mutante.setDestreza(destreza);
