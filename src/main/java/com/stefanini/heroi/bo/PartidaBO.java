@@ -1,0 +1,56 @@
+package com.stefanini.heroi.bo;
+
+import java.io.IOException;
+
+import com.stefanini.heroi.dto.Duelo;
+import com.stefanini.heroi.dto.Partida;
+import com.stefanini.heroi.dto.PersonagemDto;
+
+public class PartidaBO {
+	private DueloBO dueloService = new DueloBO();
+	
+	
+	public Partida createJogada(Partida partida) throws IOException {
+		Duelo duelo = new Duelo(null);
+		if(partida.getDuelos() == null) {
+			partida = new Partida();
+			duelo = dueloService.createDuelo(null);
+			partida.getDuelos().add(duelo);
+		}else {
+			if(partida.getDuelos().size()<10) {
+				duelo = dueloService.createDuelo(partida.getDuelos().get(partida.getDuelos().size()-1).getPersonagemVitorioso());
+				partida.getDuelos().add(duelo);
+			}
+			if(partida.getDuelos().size()==10) {
+				partida = getVitoriosos(partida);
+				
+			}
+		}
+		return partida;
+	}
+	
+	private Partida getVitoriosos(Partida partida) {
+		PersonagemDto vitorioso1 = new PersonagemDto();
+		PersonagemDto vitorioso2 = new PersonagemDto();
+		for(Duelo d : partida.getDuelos()) {
+			for(PersonagemDto p : d.getPersonagens()) {
+				if(p.getVitorias()>vitorioso1.getVitorias()) {
+					if(vitorioso2.equalsPersonagem(p)) {	
+						vitorioso2=vitorioso1;
+						vitorioso1=p;
+					}else {
+						vitorioso1=p;
+					}
+				}else
+				if(p.getVitorias()>=vitorioso2.getVitorias() && p.getVitorias()<=vitorioso1.getVitorias() && !p.equalsPersonagem(vitorioso1)) {	
+					vitorioso2=p;
+				}
+				
+
+			}
+		}
+		partida.setHeroiQueMaisVenceu(vitorioso1);
+		partida.setSegundoHeroiQueMaisVenceu(vitorioso2);
+		return partida;
+	}
+}

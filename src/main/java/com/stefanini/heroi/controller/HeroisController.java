@@ -26,35 +26,35 @@ import com.stefanini.heroi.dto.PersonagemDto;
 @RequestMapping(value="/herois")
 public class HeroisController {
 
-	private PersonagemBO personagemBo = new PersonagemBO();
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public List<PersonagemDto> carregaHeroi() throws IOException {
-		return personagemBo.carregarPersonagem();
-	}
-	
-	@RequestMapping(method=RequestMethod.GET,value = "/duelo")
-	public Duelo createDuelo() throws IOException {
-		return personagemBo.createDuelo(null);
-	}
-	@RequestMapping(method=RequestMethod.GET,value = "/partida")
-	public Partida createJogada() throws IOException {
-		return personagemBo.createJogada(null);
-	}
-	
-	@RequestMapping(path = "/jogadas",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Partida createJogada(@RequestBody Partida partida) {
-		try {
-			return personagemBo.createJogada(partida);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return partida;
-		}
-	}
-	@RequestMapping(path = "/mutante",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public PersonagemDto createMutante(@RequestBody Partida partida) {
-		PersonagemDto mutante = new PersonagemDto();
-		return mutante = personagemBo.createHeroiMutante(partida);
-	}
+//	private PersonagemBO personagemBo = new PersonagemBO();
+//	
+//	@RequestMapping(method=RequestMethod.GET)
+//	public List<PersonagemDto> carregaHeroi() throws IOException {
+//		return personagemBo.carregarPersonagem();
+//	}
+//	
+//	@RequestMapping(method=RequestMethod.GET,value = "/duelo")
+//	public Duelo createDuelo() throws IOException {
+//		return personagemBo.createDuelo(null);
+//	}
+//	@RequestMapping(method=RequestMethod.GET,value = "/partida")
+//	public Partida createJogada() throws IOException {
+//		return personagemBo.createJogada(null);
+//	}
+//	
+//	@RequestMapping(path = "/jogadas",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+//	public Partida createJogada(@RequestBody Partida partida) {
+//		try {
+//			return personagemBo.createJogada(partida);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return partida;
+//		}
+//	}
+//	@RequestMapping(path = "/mutante",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+//	public PersonagemDto createMutante(@RequestBody Partida partida) {
+//		PersonagemDto mutante = new PersonagemDto();
+//		return mutante = personagemBo.createHeroiMutante(partida);
+//	}
 	
 }
