@@ -9,19 +9,20 @@ import com.stefanini.heroi.dto.PersonagemDto;
 public class PartidaBO {
 	private DueloBO dueloService = new DueloBO();
 	
-	
+	// A CADA CHAMADA O ARRAY PARTIDA CRIARÁ UM NOVO DUELO ATÉ ATINGIR 10 DUELOS
 	public Partida createJogada(Partida partida) throws IOException {
-		Duelo duelo = new Duelo(null);
+		Duelo duelo;
+		Integer quantidadeMaximaDuelosPorPartida = 10;
 		if(partida.getDuelos() == null) {
 			partida = new Partida();
 			duelo = dueloService.createDuelo(null);
 			partida.getDuelos().add(duelo);
 		}else {
-			if(partida.getDuelos().size()<10) {
+			if(partida.getDuelos().size()<quantidadeMaximaDuelosPorPartida) {
 				duelo = dueloService.createDuelo(partida.getDuelos().get(partida.getDuelos().size()-1).getPersonagemVitorioso());
 				partida.getDuelos().add(duelo);
 			}
-			if(partida.getDuelos().size()==10) {
+			if(partida.getDuelos().size()==quantidadeMaximaDuelosPorPartida) {
 				partida = getVitoriosos(partida);
 				
 			}

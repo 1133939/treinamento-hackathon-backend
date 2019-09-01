@@ -1,15 +1,11 @@
 package com.stefanini.heroi.bo;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Random;
-
-import com.stefanini.heroi.dto.Duelo;
 import com.stefanini.heroi.dto.Partida;
 import com.stefanini.heroi.dto.PersonagemDto;
-import com.stefanini.heroi.enume.Atributos;
 import com.stefanini.heroi.util.BancoMemoriaUtil;
 
 /**
@@ -19,6 +15,7 @@ import com.stefanini.heroi.util.BancoMemoriaUtil;
  */
 
 public class PersonagemBO {
+	private Random random = new Random();
 
 	/**
 	 * Carrega dados dos personagens na memória
@@ -30,7 +27,6 @@ public class PersonagemBO {
 	}
 	public PersonagemDto carregarUmPersonagem() throws IOException{
 		List<PersonagemDto> listPersonagem = BancoMemoriaUtil.getInstance().carregaPersonagens();
-		Random random = new Random();
 		int numAleatorio = random.nextInt(listPersonagem.size());
 		return listPersonagem.get(numAleatorio);
 	}

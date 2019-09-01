@@ -11,10 +11,10 @@ import com.stefanini.heroi.enume.Atributos;
 import com.stefanini.heroi.util.BancoMemoriaUtil;
 
 public class DueloBO {
+	private Random random = new Random();
 
 	public Duelo createDuelo(PersonagemDto personagemVitorioso) throws IOException {
 		List<PersonagemDto> listPersonagem = BancoMemoriaUtil.getInstance().carregaPersonagens();
-		Random random = new Random();
 		int numAleatorio = random.nextInt(listPersonagem.size());
 		PersonagemDto p1 = (personagemVitorioso == null) ? listPersonagem.get(numAleatorio) : personagemVitorioso;
 		listPersonagem.remove(numAleatorio);
@@ -23,40 +23,54 @@ public class DueloBO {
 		while (p1.getAlinhamento().equals(p2.getAlinhamento())) {
 			numAleatorio = random.nextInt(listPersonagem.size());
 			p2 = listPersonagem.get(numAleatorio);
-		} if (!p1.equals(p2)) {
+		}
+		if (!p1.equals(p2)) {
 			Duelo duelo = new Duelo(Arrays.asList(p1, p2));
-			boolean duelando = true;
-			while (duelando) {
-				int randomAtributo = random.nextInt(6) + 1;
-				if (randomAtributo == Atributos.inteligencia.getCod()) {
-					duelo = dueloAtributoInteligenciaEscolherVitorioso(p1, p2, duelo);
-					duelando=(duelo.getPersonagemVitorioso()!=null) ? false : true;
-				} else if (randomAtributo == Atributos.forca.getCod()) {
-					duelo = dueloAtributoForcaEscolherVitorioso(p1, p2, duelo);
-					duelando=(duelo.getPersonagemVitorioso()!=null) ? false : true;
-				} else if (randomAtributo == Atributos.destreza.getCod()) {
-					duelo = dueloAtributoDestrezaEscolherVitorioso(p1, p2, duelo);
-					duelando=(duelo.getPersonagemVitorioso()!=null) ? false : true;
-				} else if (randomAtributo == Atributos.poder.getCod()) {
-					duelo = dueloAtributoPoderEscolherVitorioso(p1, p2, duelo);
-					duelando=(duelo.getPersonagemVitorioso()!=null) ? false : true;
-				} else if (randomAtributo == Atributos.combate.getCod()) {
-					duelo = dueloAtributoCombateEscolherVitorioso(p1, p2, duelo);
-					duelando=(duelo.getPersonagemVitorioso()!=null) ? false : true;
-				} else if (randomAtributo == Atributos.defesa.getCod()) {
-					duelo = dueloAtributoDefesaEscolherVitorioso(p1, p2, duelo);
-					duelando=(duelo.getPersonagemVitorioso()!=null) ? false : true;
-				}
-			}
+			duelo = dueloEntrePersonagens(duelo,p1,p2);
 			return duelo;
-		}else 
-			while(p1.equals(p2)) {
+		} else {
+			while (p1.equals(p2)) {
 				numAleatorio = random.nextInt(listPersonagem.size());
 				p2 = listPersonagem.get(numAleatorio);
 			}
+		}
 		return createDuelo(p1);
-		
+
 	}
+	private Duelo dueloEntrePersonagens(Duelo duelo, PersonagemDto p1, PersonagemDto p2) {
+		boolean duelando = true;
+		while (duelando) {
+			int randomAtributo = random.nextInt(6) + 1;
+			if (randomAtributo == Atributos.inteligencia.getCod()) {
+				duelo = dueloAtributoInteligenciaEscolherVitorioso(p1, p2, duelo);
+				duelando = dueloEntrePersonagensAtributo(duelo);
+			} else if (randomAtributo == Atributos.forca.getCod()) {
+				duelo = dueloAtributoForcaEscolherVitorioso(p1, p2, duelo);
+				duelando = dueloEntrePersonagensAtributo(duelo);
+			} else if (randomAtributo == Atributos.destreza.getCod()) {
+				duelo = dueloAtributoDestrezaEscolherVitorioso(p1, p2, duelo);
+				duelando = dueloEntrePersonagensAtributo(duelo);
+			} else if (randomAtributo == Atributos.poder.getCod()) {
+				duelo = dueloAtributoPoderEscolherVitorioso(p1, p2, duelo);
+				duelando = dueloEntrePersonagensAtributo(duelo);
+			} else if (randomAtributo == Atributos.combate.getCod()) {
+				duelo = dueloAtributoCombateEscolherVitorioso(p1, p2, duelo);
+				duelando = dueloEntrePersonagensAtributo(duelo);
+			} else if (randomAtributo == Atributos.defesa.getCod()) {
+				duelo = dueloAtributoDefesaEscolherVitorioso(p1, p2, duelo);
+				duelando = dueloEntrePersonagensAtributo(duelo);
+			}
+		}
+		return duelo;
+	}
+	
+	private boolean dueloEntrePersonagensAtributo(Duelo duelo){
+		boolean duelando = true;
+		boolean acabouDuelo = false;
+		duelando = (duelo.getPersonagemVitorioso() != null) ? acabouDuelo : duelando;
+		return duelando;
+	}
+	
 	private Duelo dueloAtributoInteligenciaEscolherVitorioso(PersonagemDto p1, PersonagemDto p2, Duelo duelo) {
 		if (p1.getInteligencia() > p2.getInteligencia()) {
 			duelo.setPersonagemVitorioso(p1);

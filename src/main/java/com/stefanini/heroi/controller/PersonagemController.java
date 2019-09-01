@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stefanini.heroi.bo.PersonagemBO;
-import com.stefanini.heroi.dto.Duelo;
 import com.stefanini.heroi.dto.Partida;
 import com.stefanini.heroi.dto.PersonagemDto;
 
@@ -32,11 +31,9 @@ public class PersonagemController {
 	public List<PersonagemDto> carregaHeroi() throws IOException {
 		return personagemBo.carregarPersonagem();
 	}
-
 	@RequestMapping(path = "/mutante",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public PersonagemDto createMutante(@RequestBody Partida partida) {
-		PersonagemDto mutante = new PersonagemDto();
-		return mutante = personagemBo.createHeroiMutante(partida);
+		return personagemBo.createHeroiMutante(partida);
 	}
 	
 }
